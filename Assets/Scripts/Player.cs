@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     private GameplayInput _gameplayInput;
     private Rigidbody _rigidbody;
+    
+    [SerializeField] private float speed;
+    [SerializeField] private Light light;
+    [SerializeField] private Text coinsText;
+    
+    private int coins;
 
-    [SerializeField]
-    private float speed;
-
-    [SerializeField]
-    private Light light;
+    [SerializeField] private Item currentItem;
     
     private void Awake()
     {
@@ -40,6 +44,8 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Collectible"))
         {
             light.color = Color.red;
+            coins += 1;
+            SetCountText();
         }
     }
 
@@ -57,5 +63,10 @@ public class Player : MonoBehaviour
         {
             light.color = Color.blue;
         }
+    }
+    
+    private void SetCountText()
+    {
+        coinsText.text = $"Coins: {coins}";
     }
 }
